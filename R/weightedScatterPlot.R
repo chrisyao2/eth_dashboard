@@ -1,0 +1,86 @@
+weightedScatterplotTabUI <- function(id,dependentVarList, dataChoiceList)
+{
+  
+  fluidRow(
+    box(
+      shinyWidgets::dropdown(
+        shinyWidgets::pickerInput(NS(id,"selectData"),"Select Dataset", choices = dataChoiceList, selected = dataChoiceList[1]),
+        shinyWidgets::pickerInput(NS(id,"xVar"),"Select X Var.", choices = dependentVarList, selected = dependentVarList[1]),
+        shinyWidgets::pickerInput(NS(id,"yVar"),"Select Y Var.", choices = dependentVarList, selected = dependentVarList[6]),
+        shinyWidgets::pickerInput(NS(id,"weightVar"),"Select Weight Var.", choices = dependentVarList, selected = dependentVarList[1]),
+        
+        
+        circle = FALSE, 
+        status = "danger",
+        label = "Graph Options",
+        width = "250px"
+        
+      ),
+      
+      plotOutput(NS(id, "scatterplot"), height = 900), 
+      
+      width = 12, 
+      height = 1000
+    ),
+    
+    
+  )
+  
+}
+
+
+weightedScatterplotTabServer <- function(id, data)
+{
+  moduleServer(id, function(input, output, session)
+  {
+    dataset <- reactive(data[[input$selectData]])
+    choiceListAllHazard2 <- list("Incidence" = "Incidence", "Mortality" = "Mortality", "DALYs" = "DALYs", "Incidence_Rate_100K", "Mortality_Rate_100K", "DALY_Rate_100K","Case_fatality_ratio", "DALY_per_case")
+    
+    observeEvent(input$selectData, 
+    {
+                   if(input$selectData == "totalPopAndNewHaz")
+                   {
+                     shinyWidgets::updatePickerInput(session, inputId = "xVar", choices = choiceListAllHazard2)
+                     shinyWidgets::updatePickerInput(session, inputId = "yVar", choices = choiceListAllHazard2)
+                     shinyWidgets::updatePickerInput(session, inputId = "weightVar", choices = choiceListAllHazard2)
+                   }
+                   
+    })
+    medianList <- reactive({   
+     
+      dataset() %>% dplyr::group_by(hazard, haz_group) %>%
+        dplyr::summarise(xMedian = median(!!rlang::sym(input$xVar), na.rm = T),
+                         yMedian = median(!!rlang::sym(input$yVar), na.rm = T),
+                         weightMedian = median(!!rlang::sym(input$weightVar), na.rm = T))
+      
+    })
+    
+    output$scatterplot <- renderPlot(
+      {
+        colors <- c("#001e4e", "#1261A0", "#4F97A3", "#311465", "#9866c7", "#d45087", "#043927","#6B8E23","#24AB09","#CC7722","#E3242B" )
+        ggplot2::ggplot(medianList(), aes(x = xMedian, y = yMedian, size = weightMedian, color= haz_group)) +  
+          
+          ggplot2::geom_point() +
+          ggplot2::scale_x_log10() +
+          ggplot2::scale_y_log10() +
+          ggplot2::ggtitle(paste("Weighted Scatterplot of ",input$yVar, "vs.",input$xVar)) +
+          ggplot2::theme_light() +                                                        
+          ggplot2::theme(plot.title = ggplot2::element_text(size = 30, face = "bold", hjust = .5),
+                         legend.title = ggplot2::element_text(size=20, face="bold"), 
+                         legend.text= ggplot2::element_text(size = 20),
+                         axis.title = ggplot2::element_text(size = 12) ,
+                         axis.text.x= ggplot2::element_text(size=14,face="bold"),
+                         axis.text.y= ggplot2:: element_text(size=14,face="bold")) +
+          ggplot2::scale_size_area(max_size = 15) +
+          ggplot2::xlab(input$xVar) +
+          ggplot2::ylab(input$yVar) +
+          ggplot2::labs(color= "Hazard group", size="Scale of weighted variable chosen") + 
+          ggrepel::geom_label_repel(aes(label = hazard, fontface = "bold"), size = 4.0, show.legend = F, min.segment.length = ggplot2::unit(.1, "lines")) + 
+          ggplot2::scale_color_manual(values = colors) +
+          ggplot2::guides(colour = ggplot2::guide_legend(override.aes = list(size= 5)))
+      })
+    
+    
+  })
+  
+}

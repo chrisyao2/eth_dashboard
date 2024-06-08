@@ -1,0 +1,5 @@
+exportPattern("^[[:alpha:]]+")
+import(shiny)
+import(shinydashboard)
+importFrom(magrittr, "%>%")
+importFrom(ggplot2, ggplot,aes)

@@ -1,0 +1,20 @@
+---
+title: "Simulation"
+output: html_document
+runtime: shiny
+---
+
+# Simulation
+The Simulation tab allows users to generate their own data on hazards based on their own bounds.
+
+To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
+
+## Running the Simulation
+
+To generate your own data, follow the 
+
+
+
+You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change.  This demonstrates how a standard R plot can be made interactive by wrapping it in the Shiny `renderPlot` function. The `selectInput` and `sliderInput` functions create the input widgets used to drive the plot.
+
+
