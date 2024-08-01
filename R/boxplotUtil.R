@@ -45,7 +45,7 @@ createBoxPlot <- function(data, yAxisLimit,input)
   ggplot(data, ggplot2::aes_string(x ="hazard", y = input$dependentVar)) +
     ggplot2::aes(text = input$dependentVar)+
     ggplot2::geom_boxplot(
-      fill = "slateblue",
+      fill = "#C2185B",
       outlier.shape = NA,
     ) +
     
