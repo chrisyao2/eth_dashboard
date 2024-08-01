@@ -21,30 +21,34 @@ dashboardUI <- function()
   #                           "Case fatality ratio" ="Case_fatality_ratio","DALYs" = "DALYs", "DALYs per person year" = "DALYs_per_person_year","DALYs per 1000 cases" ="DALYs_per_1000_cases","YLL"="YLL","YLL per person year" ="YLL_per_person_year",
   #                           "YLD"="YLD","YLD per person year"= "YLD_per_person_year")
 
-  FERGVarList <- list("Incidence" = "Incidence", "Mortality" = "Mortality",
-                      "Case Fatality Ratio" ="Case_fatality_ratio","DALYs" = "DALYs","DALYs per 1000 cases" ="DALYs_per_1000_Cases","YLL"="YLL","YLL Rate per 100,000" ="YLL_Rate_100K",
-                      "YLD"="YLD","YLD Rate per 100,000"= "YLD_Rate_100K", "Incidence Rate per 100,000" = "Incidence_Rate_100K", "Mortality Rate per 100,000" = "Mortality_Rate_100K", "DALY Rate per 100,000" =  "DALY_Rate_100K")
+  FERGVarList <- list("DALY Rate per 100,000" =  "DALY_Rate_100K", "DALYs" = "DALYs", "Case Fatality Ratio" ="Case_fatality_ratio", "Incidence" = "Incidence", "Mortality" = "Mortality",
+                      "DALYs per 1000 cases" ="DALYs_per_1000_Cases","YLL"="YLL","YLL Rate per 100,000" ="YLL_Rate_100K",
+                      "YLD"="YLD","YLD Rate per 100,000"= "YLD_Rate_100K", "Incidence Rate per 100,000" = "Incidence_Rate_100K", "Mortality Rate per 100,000" = "Mortality_Rate_100K")
 
    
   #Old list contains DALYs per case, but we dont have data assosiated with it
   #choiceListAllHazard <- list("Incidence" = "Incidence", "Mortality" = "Mortality", "DALYs" = "DALYs", "DALYs Per Case" = "DALYs_per_case")
   
-  choiceListAllHazard <- list("Incidence" = "Incidence", "Mortality" = "Mortality", "DALYs" = "DALYs", "Incidence_Rate_100K", "Mortality_Rate_100K", "DALY_Rate_100K","Case_fatality_ratio", "DALY_per_case")
+  choiceListAllHazard <- list("DALY_Rate_100K","DALY_per_case","Case_fatality_ratio", "Incidence" = "Incidence", "Mortality" = "Mortality", "DALYs" = "DALYs", "Incidence_Rate_100K", "Mortality_Rate_100K")
   
-  scatterDataList <- list("Under 5 years of age"="underFive", "Over five years of age"="overFive", "Total Population w/ Non-FERG" = "totalPopAndNewHaz")
+  scatterDataList <- list("Total Population w/ Non-FERG" = "totalPopAndNewHaz","Under 5 years of age"="underFive", "Over five years of age"="overFive")
+  
+
   
   sideBar <- dashboardSidebar(
     sidebarMenu(
       menuItem("Home", tabName = "homepageTab"),
       menuItem("Definitions", tabName = "definitionTab"),
       menuItem("All Hazards", tabName = "allHazardTab"),
-      menuItem("All Hazards Test", tabName = "allHazardTabTest"),
+      
       menuItem("FERG Hazards", tabName = "FERGHazards"),
       #menuItem("Custom Hazards", tabName = "CustomHazards"),
       menuItem("Scatter Plot", tabName ="Scatter"),
       menuItem("Weighted Scatter Plot", tabName ="WeightedScatter"),
-      menuItem("Add New Hazards", tabName = "Simulation"),
-      menuItem("User Manual", tabName = "UserManual")
+      menuItem("Add New Hazards", tabName = "Simulation")
+      #Hide these tabs for now
+      #menuItem("All Hazards Test", tabName = "allHazardTabTest"),
+      #menuItem("User Manual", tabName = "UserManual")
     )
   )
   
@@ -74,12 +78,14 @@ dashboardUI <- function()
       tabItem(tabName = "Simulation",
               SimulationUI("simulationTab")
       ),
-      tabItem(tabName = "allHazardTabTest",
-              allHazardTestUI("allHazardTabTest", choiceListAllHazard,allHazardDiseaseList)
-      ),
-      tabItem(tabName = "UserManual",
-              userManualTabUI("userManual")
-      ),
+      
+      #Hidden for now
+      #tabItem(tabName = "allHazardTabTest",
+      #        allHazardTestUI("allHazardTabTest", choiceListAllHazard,allHazardDiseaseList)
+      #),
+      #tabItem(tabName = "UserManual",
+      #        userManualTabUI("userManual")
+      #),
       tabItem(tabName = "homepageTab",
               homepageTabUI("homepage")
       )
@@ -109,7 +115,7 @@ dashboardServer <- function(input,output,session,dataList)
     SimulationServer("simulationTab")
     #customHazardTabServer("CustomHazardTab")
     allHazardTestServer("allHazardTabTest", dataList[c("totalPopAndNewHaz")],allHazardDiseaseList)
-    userManualTabServer("userManual")
+    #userManualTabServer("userManual")
     homepageTabServer("homepage")
   }
 }

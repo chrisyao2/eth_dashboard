@@ -6,8 +6,8 @@ weightedScatterplotTabUI <- function(id,dependentVarList, dataChoiceList)
       shinyWidgets::dropdown(
         shinyWidgets::pickerInput(NS(id,"selectData"),"Select Dataset", choices = dataChoiceList, selected = dataChoiceList[1]),
         shinyWidgets::pickerInput(NS(id,"xVar"),"Select X Var.", choices = dependentVarList, selected = dependentVarList[1]),
-        shinyWidgets::pickerInput(NS(id,"yVar"),"Select Y Var.", choices = dependentVarList, selected = dependentVarList[6]),
-        shinyWidgets::pickerInput(NS(id,"weightVar"),"Select Weight Var.", choices = dependentVarList, selected = dependentVarList[1]),
+        shinyWidgets::pickerInput(NS(id,"yVar"),"Select Y Var.", choices = dependentVarList, selected = dependentVarList[1]),
+        shinyWidgets::pickerInput(NS(id,"weightVar"),"Select Weight Var.", choices = dependentVarList, selected = dependentVarList[5]),
         
         
         circle = FALSE, 
@@ -34,7 +34,7 @@ weightedScatterplotTabServer <- function(id, data)
   moduleServer(id, function(input, output, session)
   {
     dataset <- reactive(data[[input$selectData]])
-    choiceListAllHazard2 <- list("Incidence" = "Incidence", "Mortality" = "Mortality", "DALYs" = "DALYs", "Incidence_Rate_100K", "Mortality_Rate_100K", "DALY_Rate_100K","Case_fatality_ratio", "DALY_per_case")
+    choiceListAllHazard2 <- list("DALY_Rate_100K","DALY_per_case","Case_fatality_ratio", "Incidence" = "Incidence", "Mortality" = "Mortality", "DALYs" = "DALYs", "Incidence_Rate_100K", "Mortality_Rate_100K")
     
     observeEvent(input$selectData, 
     {
@@ -42,7 +42,7 @@ weightedScatterplotTabServer <- function(id, data)
                    {
                      shinyWidgets::updatePickerInput(session, inputId = "xVar", choices = choiceListAllHazard2)
                      shinyWidgets::updatePickerInput(session, inputId = "yVar", choices = choiceListAllHazard2)
-                     shinyWidgets::updatePickerInput(session, inputId = "weightVar", choices = choiceListAllHazard2)
+                     shinyWidgets::updatePickerInput(session, inputId = "weightVar", choices = choiceListAllHazard2, selected = choiceListAllHazard2[3])
                    }
                    
     })
