@@ -5,12 +5,6 @@ getAllData <- function()
     totalPopData <- loadFERGData("data/FERGData/20200908_met_bio_dat_all.rds")
     underFiveData <- loadFERGData("data/FERGData/20200908_met_bio_dat_u5.rds")
     overFiveData <- loadFERGData("data/FERGData/20200908_met_bio_dat_o5.rds")
-    
-    # totalPopData <- loadFERGData("data/FERGData/FERG_Rates/Met_bio_dat_all_Rate.rds")
-    # underFiveData <- loadFERGData("data/FERGData/FERG_Rates/Met_bio_dat_u5_Rate.rds")
-    # overFiveData <- loadFERGData("data/FERGData/FERG_Rates/Met_bio_dat_o5_Rate.rds")
-    
-    
 
     newHazardData <- loadNewHazardData()
     
@@ -51,7 +45,7 @@ loadNewHazardData <- function()
     
     #CFI Sim data but with renamed Diseases
     #newHazardData <- readRDS("data/sim_lowerbound0/CFISimulation/CFISim1_UpdatedName.rds")
-    newHazardData <- readRDS("data/sim_lowerbound0/CFISimulation/UpdatedNonFERG.rds")
+    newHazardData <- readRDS("data/UpdatedNonFERG.rds")
     
     newHazardData$hazard <- as.factor(newHazardData$hazard)
     newHazardData$Case_fatality_ratio <- newHazardData$Case_fatality_ratio * 100
