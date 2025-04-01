@@ -45,12 +45,15 @@ loadNewHazardData <- function()
     
     #CFI Sim data but with renamed Diseases
     #newHazardData <- readRDS("data/sim_lowerbound0/CFISimulation/CFISim1_UpdatedName.rds")
-    newHazardData <- readRDS("data/UpdatedNonFERG.rds")
+    #newHazardData <- readRDS("data/UpdatedNonFERG.rds")
+    
+  
+    newHazardData <- readRDS("data/rmqi_sim_results.rds")
     
     newHazardData$hazard <- as.factor(newHazardData$hazard)
     newHazardData$Case_fatality_ratio <- newHazardData$Case_fatality_ratio * 100
     newHazardData <- orderDiseaseTypes(newHazardData)
-    
+    return(newHazardData)
 }
 
 #Requires data to have column named "haz_group"

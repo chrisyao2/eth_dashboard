@@ -47,7 +47,7 @@ dashboardUI <- function()
       menuItem("Weighted Scatter Plot", tabName ="WeightedScatter"),
       menuItem("Add New Hazards", tabName = "Simulation")
       #Hide these tabs for now
-      #menuItem("All Hazards Test", tabName = "allHazardTabTest"),
+      #menuItem("All Hazards Test", tabName = "allHazardTabTest")
       #menuItem("User Manual", tabName = "UserManual")
     )
   )
@@ -75,6 +75,7 @@ dashboardUI <- function()
       tabItem(tabName = "Scatter",
               scatterplotTabUI("scatterPlotTab",FERGVarList, scatterDataList)
       ),
+      
       tabItem(tabName = "Simulation",
               SimulationUI("simulationTab")
       ),
@@ -114,7 +115,7 @@ dashboardServer <- function(input,output,session,dataList)
     weightedScatterplotTabServer("weightedScatterPlotTab", dataList)
     SimulationServer("simulationTab")
     #customHazardTabServer("CustomHazardTab")
-    allHazardTestServer("allHazardTabTest", dataList[c("totalPopAndNewHaz")],allHazardDiseaseList)
+    #allHazardTestServer("allHazardTabTest", dataList[c("totalPopAndNewHaz")],allHazardDiseaseList)
     #userManualTabServer("userManual")
     homepageTabServer("homepage")
   }

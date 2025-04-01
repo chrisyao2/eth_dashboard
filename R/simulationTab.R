@@ -93,11 +93,12 @@ SimulationUI <- function(id)
                      selected = 1),
         
         # Input: Select a file ----
-        fileInput(NS(id,"file1"), "Choose CSV File",
+        fileInput(NS(id,"file1"), "Choose File",
                   multiple = TRUE,
                   accept = c("text/csv",
                              "text/comma-separated-values,text/plain",
-                             ".csv")),
+                             ".csv",
+                             ".xlsx")),
         
         # Horizontal line ----
         tags$hr(),
@@ -170,6 +171,7 @@ SimulationServer <- function(id)
       },
       content = function(file) {
         write.csv(simulationData(), file, row.names = FALSE)
+        #saveRDS(simulationData(), file)
       }
     )
     

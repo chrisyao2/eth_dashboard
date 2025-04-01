@@ -1,0 +1,27 @@
+---
+title: "dashboard"
+format: html
+editor: visual
+---
+
+# 3 Disease burden dashboard
+
+The disease burden dashboard was initially created to provide users with a friendly, yet comprehensive way of visualizing, and comparing data for hazards from the 2010 FERG report (FERG Hazards). Its main feature
+
+the data, from box plots to scatter plots, different scaling options, and allowed users to hand select individual hazards to compare side by side. It has since expanded to generate and graph data for hazards not included in the FERG report through a provided simulation. The plots, graphical interface and simulations were created in R statistical software using the Shiny and ggplot2 packages.
+
+## 3.1 
+
+## 3.2 Features
+
+### 3.2.1 All Hazards Tab
+
+support hazards not included in the FERG report by
+
+grown to support a simulation that allows users to generate data for hazards not included in the FERG report
+
+the comparison of hazards provided by the user
+
+It has since grown to support
+
+a simulation that generates data for
