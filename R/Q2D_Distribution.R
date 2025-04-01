@@ -35,3 +35,18 @@ mapUniformToCDF <- function(cdf, uniformData)
 {
   result <- cdf(uniformData)
 }
+
+
+simulate_new <- function(boundVector, probabilityVec, n_point)
+{
+   # Use pmap to generate random samples
+   return(purrr::pmap(list(mqi=boundVector, n=n_point, mqi.quantile=probabilityVec), mc2d::rmqi))
+   # Create dataframe with samples and identifiers
+  
+}
+
+
+unitTest <- function()
+{
+   
+}

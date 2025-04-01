@@ -1,11 +1,9 @@
 name: ethdashboard
-title:
+title: ethdashboard
 username:
 account: osu-cfi
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4244430
-bundleId: 7566782
+bundleId: 10039008
 url: https://osu-cfi.shinyapps.io/ethdashboard/
-when: 1692050554.16906
-lastSyncTime: 1692050554.16907

@@ -17,6 +17,7 @@ autoSimImportedData <- function(data)
     {
       offset <- 2
       currentDependentVar <- reformatList(data[[x,offset + i]])
+      #currentDependentVar <- as.vector(currentDependentVar)
       
       if(is.null(parameterList))
       {
@@ -30,6 +31,7 @@ autoSimImportedData <- function(data)
     
     presentDiseases <- colnames(data)
     presentDiseases <- presentDiseases[c(-1,-2)]
+    
     
     simResults <- runSimulation(parameterList,disease, diseaseType,presentDiseases)
     
